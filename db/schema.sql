@@ -31,7 +31,7 @@ CREATE TABLE todos (
     id INT AUTO_INCREMENT NOT NULL,
     task VARCHAR(500),
     project_id INT NOT NULL,
-    belongs_to INT,
+    belongs_to INT NULL,
     finished BOOLEAN,
     FOREIGN KEY (project_id) REFERENCES projects(id),
     FOREIGN KEY (belongs_to) REFERENCES users(id),
