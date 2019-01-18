@@ -1,14 +1,10 @@
 var express = require('express');
-
 var app = express();
-
 var PORT = process.env.PORT || 3000;
-
 var routes = require('./routing/routes.js');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
 app.use(express.static(__dirname + '/public'));
 
 routes(app);
