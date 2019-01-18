@@ -4,7 +4,17 @@ var users_projects = require("../models/users_projects.js");
 var todos = require("../models/todos.js");
 var bcrypt = require('bcryptjs');
 
+//session stuff
+var cookieParser = require('cookie-parser');
+
+var session = require('express-session');
+
 module.exports = function(app){
+    //allow sessions
+    app.use(session({ secret: 'app', cookie: { maxAge: 1*1000*60*60*24*365 }}));
+
+    app.use(cookieParser());
+
     //initial page
     app.get("/", function(req, res){
         // include buttons: login, signup
