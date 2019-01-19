@@ -1,0 +1,36 @@
+// load the things we need
+var express = require('express');
+var app = express();
+
+
+app.set('view engine', 'ejs');
+
+
+	app.get('/login', function(req, res){
+
+		  
+		  res.render('../views/pages/login.ejs');
+		
+    })
+    
+    
+	app.get('/signup', function(req, res){
+
+		  
+        res.render('../views/pages/signup.ejs');
+      
+  })
+
+
+  app.get('/home', function(req, res){
+
+		  
+    res.render('../views/pages/home.ejs');
+  
+})
+
+	
+
+app.listen(3000, function(){
+	console.log('listening on 3000')
+});
