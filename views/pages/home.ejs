@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+		<% include ../partials/header.ejs %>
+		
+		<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    
+
+
+		<style>
+				:root {
+					--input-padding-x: 1.5rem;
+					--input-padding-y: .75rem;
+				  }
+				  
+				  body {
+					background: #9CECFB;
+				   
+					background: -webkit-linear-gradient(to right, #0052D4, #65C7F7, #9CECFB);
+					
+					background: linear-gradient(to right, #0052D4, #65C7F7, #9CECFB);
+					
+				  }
+				  
+				  .card-signin {
+					border: 0;
+					border-radius: 1rem;
+					box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+				  }
+				  
+				  .card-signin .card-title {
+					margin-bottom: 2rem;
+					font-weight: 300;
+					font-size: 1.5rem;
+				  }
+				  
+				  .card-signin .card-body {
+					padding: 2rem;
+				  }
+				  
+				  .form-signin {
+					width: 100%;
+				  }
+				  
+				  .form-signin .btn {
+					font-size: 80%;
+					border-radius: 5rem;
+					letter-spacing: .1rem;
+					font-weight: bold;
+					padding: 1rem;
+					transition: all 0.2s;
+				  }
+				  
+				  .form-label-group {
+					position: relative;
+					margin-bottom: 1rem;
+				  }
+				  
+				  .form-label-group input {
+					height: auto;
+					border-radius: 2rem;
+				  }
+				  
+				  .form-label-group>input,
+				  .form-label-group>label {
+					padding: var(--input-padding-y) var(--input-padding-x);
+				  }
+				  
+				  .form-label-group>label {
+					position: absolute;
+					top: 0;
+					left: 0;
+					display: block;
+					width: 100%;
+					margin-bottom: 0;
+					
+					line-height: 1.5;
+					color: #495057;
+					border: 1px solid transparent;
+					border-radius: .25rem;
+					transition: all .1s ease-in-out;
+				  }
+				  
+				  .form-label-group input::-webkit-input-placeholder {
+					color: transparent;
+				  }
+				  
+				  .form-label-group input:-ms-input-placeholder {
+					color: transparent;
+				  }
+				  
+				  .form-label-group input::-ms-input-placeholder {
+					color: transparent;
+				  }
+				  
+				  .form-label-group input::-moz-placeholder {
+					color: transparent;
+				  }
+				  
+				  .form-label-group input::placeholder {
+					color: transparent;
+				  }
+				  
+				  .form-label-group input:not(:placeholder-shown) {
+					padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
+					padding-bottom: calc(var(--input-padding-y) / 3);
+				  }
+				  
+				  .form-label-group input:not(:placeholder-shown)~label {
+					padding-top: calc(var(--input-padding-y) / 3);
+					padding-bottom: calc(var(--input-padding-y) / 3);
+					font-size: 12px;
+					color: #777;
+				  }
+				  
+				  .btn-google {
+					color: white;
+					
+				  }
+				  
+				  .btn-facebook {
+					color: white;
+					background-color: #3b5998;
+				  }
+
+				  .topbanner { 
+  background:
+rgb(242, 239, 244);
+
+
+}
+
+        
+      
+        /*for test*/
+        body{
+          height: 400px;
+        }
+				
+				</style>
+				
+
+</head>
+
+<body>
+        <div class="container">
+                <div class="row">
+                    
+                    
+                    <div class="col-md-12">
+                    <h4>Project Details</h4>
+                    <div class="table-responsive">
+            
+                            
+                          <table id="projects" class="table table-bordred table-striped">
+                               
+                               <thead>
+                               
+                               
+                               <!-- <th>First Name</th>
+                                <th>Last Name</th>
+                                 <th>Address</th>
+                                 <th>Email</th>
+                                 <th>Contact</th> -->
+                                 <th>Project Name</th>
+                                 <th>Description</th>
+                                 <th>Created by</th>
+                                  <th>Edit</th>
+                                  
+                                   <th>Delete</th>
+                               </thead>
+                <tbody>
+
+                  <% for(var i=0; i < projects.length; i++){ %>
+                    <tr id=<%= "project" + projects[i].id %>>
+                      <td><%= projects[i].name %></td>
+                      <td><%= projects[i].project_description %></td>
+                      <td><%= projects[i].creator %></td>
+                      <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
+                      <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
+                    </tr>
+                  <% } %>
+                
+                <tr>
+                
+                <!-- <td>Mohsin</td>
+                <td>Irshad</td>
+                <td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
+                <td>isometric.mohsin@gmail.com</td>
+                <td>+923335586757</td>
+                <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
+                <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
+                </tr> -->
+                
+             
+                
+               
+                
+               
+                
+                </tbody>
+                    
+            </table>
+            
+            <div class="clearfix"></div>
+            <!-- <ul class="pagination pull-right">
+              <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+              <li class="active"><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">4</a></li>
+              <li><a href="#">5</a></li>
+              <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+            </ul> -->
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+                  <div class="modal-dialog">
+                <div class="modal-content">
+                      <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                    <h4 class="modal-title custom_align" id="Heading">Edit Your Detail</h4>
+                  </div>
+                      <div class="modal-body">
+                      <div class="form-group">
+                    <input class="form-control " type="text" placeholder="Mohsin">
+                    </div>
+                    <div class="form-group">
+                    
+                    <input class="form-control " type="text" placeholder="Irshad">
+                    </div>
+                    <div class="form-group">
+                    <textarea rows="2" class="form-control" placeholder="CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan"></textarea>
+                
+                    
+                    </div>
+                  </div>
+                      <div class="modal-footer ">
+                    <button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
+                  </div>
+                    </div>
+                <!-- /.modal-content --> 
+              </div>
+                  <!-- /.modal-dialog --> 
+                </div>
+                
+                
+                
+                <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+                  <div class="modal-dialog">
+                <div class="modal-content">
+                      <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                    <h4 class="modal-title custom_align" id="Heading">Delete this entry</h4>
+                  </div>
+                      <div class="modal-body">
+                   
+                   <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this Record?</div>
+                   
+                  </div>
+                    <div class="modal-footer ">
+                    <button type="button" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+                  </div>
+                    </div>
+                <!-- /.modal-content --> 
+              </div>
+                  <!-- /.modal-dialog --> 
+                </div>
+
+		<footer>
+            <% include ../partials/footer.ejs %>
+        </footer>
+  </body>
+</html>

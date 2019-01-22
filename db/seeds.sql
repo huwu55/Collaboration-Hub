@@ -19,3 +19,15 @@ INSERT INTO todos (task, project_id, belongs_to, finished) VALUES
 ("html and css", 1, 6, false), 
 ("youtube and lyrics api", 1, 1, true),
 ("link backend and frontend", 1, 2, false);
+
+SELECT p.name, p.project_description, i.user_id
+FROM projects p, users_projects i
+RIGHT JOIN p ON p.id = i.project_id 
+WHERE i.user_id = 1
+
+
+SELECT p.name, p.project_description, u.name as creator
+FROM projects p
+RIGHT JOIN users_projects i ON i.project_id = p.id 
+RIGHT JOIN users u ON u.id = p.creator_id
+WHERE i.user_id = 1

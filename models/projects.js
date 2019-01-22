@@ -3,8 +3,8 @@ var orm = require("../config/orm.js");
 var projects = {
     // create new project
     insert : function(projectName, creator_id, cb){
-        orm.insert("projects", "(name, creator_id)", [projectName, creator_id], ()=>{
-            cb();
+        orm.insert("projects", "(name, creator_id)", [projectName, creator_id], (err)=>{
+            cb(err);
         });
     },
 

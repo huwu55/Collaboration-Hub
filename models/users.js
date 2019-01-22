@@ -3,9 +3,9 @@ var orm = require("../config/orm.js");
 var users = {
     //insert new signup user
     insert : function(username, email, password_hash, cb){
-        orm.insert("users", "(name, email, password_hash)", [username, email, password_hash], ()=>{
+        orm.insert("users", "(name, email, password_hash)", [username, email, password_hash], (error)=>{
             //if (error) return console.log(error);
-            cb();
+            cb(error);
         });
     },
 
@@ -17,18 +17,24 @@ var users = {
     },
 
     // return selected user info
-    selectUser : function(username, cb){
-        orm.selectCertain("users", "name", username, (result)=>{
+    selectUser : function(useremail, cb){
+        orm.selectCertain("users", "email", useremail, (result)=>{
             cb(result);
         });
     },
 
-    // update selected user's email
-    updateEmail : function(username, email, cb){
-        orm.update("users", "email", "name", [email, username], ()=>{
-            cb();
+    selectUserid : function(userid, cb){
+        orm.selectCertain("users", "id", userid, (result)=>{
+            cb(result);
         });
     }
+
+    // update selected user's email
+    // updateEmail : function(username, email, cb){
+    //     orm.update("users", "email", "name", [email, username], ()=>{
+    //         cb();
+    //     });
+    // }
 };
 
 module.exports = users;

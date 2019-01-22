@@ -15,6 +15,7 @@ CREATE TABLE users (
 CREATE TABLE projects (
     id INT AUTO_INCREMENT NOT NULL,
     name VARCHAR(255),
+    project_description VARCHAR(255),
     creator_id INT NOT NULL,
     FOREIGN KEY (creator_id) REFERENCES users(id),
     PRIMARY KEY (id)

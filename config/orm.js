@@ -25,9 +25,10 @@ var ORM = {
             if (i+1 < values.length) str+=",";
         }
         str+=")";
+        console.log(str);
         connection.query(`INSERT INTO ${tableInput} ${fieldnames} VALUES ${str}`, values, (error, results, fields)=>{
-            if (error) return console.log(error);
-            cb();
+            if (error) return cb(error);
+            cb(false);
         });
     },
 
