@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+		<% include ../partials/header.ejs %>
+		
+		<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    
+
+
+		<style>
+				:root {
+					--input-padding-x: 1.5rem;
+					--input-padding-y: .75rem;
+				  }
+				  
+				  body {
+					background: #9CECFB;
+				   
+					background: -webkit-linear-gradient(to right, #0052D4, #65C7F7, #9CECFB);
+					
+					background: linear-gradient(to right, #0052D4, #65C7F7, #9CECFB);
+					
+				  }
+				  
+				  .card-signin {
+					border: 0;
+					border-radius: 1rem;
+					box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+				  }
+				  
+				  .card-signin .card-title {
+					margin-bottom: 2rem;
+					font-weight: 300;
+					font-size: 1.5rem;
+				  }
+				  
+				  .card-signin .card-body {
+					padding: 2rem;
+				  }
+				  
+				  .form-signin {
+					width: 100%;
+				  }
+				  
+				  .form-signin .btn {
+					font-size: 80%;
+					border-radius: 5rem;
+					letter-spacing: .1rem;
+					font-weight: bold;
+					padding: 1rem;
+					transition: all 0.2s;
+				  }
+				  
+				  .form-label-group {
+					position: relative;
+					margin-bottom: 1rem;
+				  }
+				  
+				  .form-label-group input {
+					height: auto;
+					border-radius: 2rem;
+				  }
+				  
+				  .form-label-group>input,
+				  .form-label-group>label {
+					padding: var(--input-padding-y) var(--input-padding-x);
+				  }
+				  
+				  .form-label-group>label {
+					position: absolute;
+					top: 0;
+					left: 0;
+					display: block;
+					width: 100%;
+					margin-bottom: 0;
+					
+					line-height: 1.5;
+					color: #495057;
+					border: 1px solid transparent;
+					border-radius: .25rem;
+					transition: all .1s ease-in-out;
+				  }
+				  
+				  .form-label-group input::-webkit-input-placeholder {
+					color: transparent;
+				  }
+				  
+				  .form-label-group input:-ms-input-placeholder {
+					color: transparent;
+				  }
+				  
+				  .form-label-group input::-ms-input-placeholder {
+					color: transparent;
+				  }
+				  
+				  .form-label-group input::-moz-placeholder {
+					color: transparent;
+				  }
+				  
+				  .form-label-group input::placeholder {
+					color: transparent;
+				  }
+				  
+				  .form-label-group input:not(:placeholder-shown) {
+					padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
+					padding-bottom: calc(var(--input-padding-y) / 3);
+				  }
+				  
+				  .form-label-group input:not(:placeholder-shown)~label {
+					padding-top: calc(var(--input-padding-y) / 3);
+					padding-bottom: calc(var(--input-padding-y) / 3);
+					font-size: 12px;
+					color: #777;
+				  }
+				  
+				  .btn-google {
+					color: white;
+					
+				  }
+				  
+				  .btn-facebook {
+					color: white;
+					background-color: #3b5998;
+				  }
+
+				  .topbanner { 
+  background:
+rgb(242, 239, 244);
+
+
+}
+
+        
+      
+        /*for test*/
+        body{
+          height: 400px;
+        }
+
+        .form-control{border:0; box-shadow:none}
+.form-control:focus{box-shadow:none;}
+
+label{color:#999;  padding-top: 5px; display:block; left:0; width:100%}
+
+.panel{border-width:2px; border-radius:7px}
+
+.table-bordered > thead > tr > th,
+.table-bordered > tbody > tr > th,
+.table-bordered > tfoot > tr > th,
+.table-bordered > thead > tr > td,
+.table-bordered > tbody > tr > td,
+.table-bordered > tfoot > tr > td{border:2px solid #eee; vertical-align: middle;}
+.table-bordered{border-radius:7px}
+
+.form-control::-moz-placeholder {
+color: #999;
+opacity: 1
+}
+.form-control:-ms-input-placeholder {
+color: #999
+}
+.form-control::-webkit-input-placeholder {
+color: #999
+}
+				
+				</style>
+				
+
+</head>
+
+<body>
+        <div class="container">
+                <div class="row">
+                    
+                    
+                    <div class="col-md-12">
+                    <h4>Project Details</h4>
+
+                    <form>
+                        <div class="form-group">
+                          <label for="formGroupExampleInput">Name</label>
+                          <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Please Enter Name of the project">
+                        </div>
+                        <div class="form-group">
+                          <label for="formGroupExampleInput2">Description</label>
+                          <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Description of the project">
+                        </div>
+                        <div class="form-group">
+                        <table id="myTable" class=" table order-list">
+                            <thead>
+                                <tr>
+                                    
+                                    <td for="formGroupExampleInput2">Member Email</td>
+                                
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                   
+                                    <td class="col-sm-4">
+                                        <input type="mail" name="mail"  class="form-control"/>
+                                    </td>
+                                
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="5" style="text-align: left;">
+                                        <input type="button" class="btn btn-lg btn-block" id="addrow" value="Add Row" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                </tr>
+                            </tfoot>
+                        </table>
+                      </div>
+
+                      <thead>
+
+         
+
+
+	<div class="row">
+	<br>
+        
+        <div class="col-sm-6">
+            <div class="panel panel-primary">
+              <div class="panel-heading">Enter Tasks</div>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Name of the Task</th>
+                    <th>Description</th>
+                    <th>Priority</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td><input id="name" class="form-control"></td>
+                    <td><input id="name" class="form-control"></td>
+                    <td><input id="name" class="form-control"></td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td><input id="name" class="form-control"></td>
+                    <td><input id="name" class="form-control"></td>
+                    <td><input id="name" class="form-control"></td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td><input id="name" class="form-control"></td>
+                    <td><input id="name" class="form-control"></td>
+                    <td><input id="name" class="form-control"></td>
+                  </tr>
+                  <tr>
+                      <td>4</td>
+                      <td><input id="name" class="form-control"></td>
+                      <td><input id="name" class="form-control"></td>
+                      <td><input id="name" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td><input id="name" class="form-control"></td>
+                        <td><input id="name" class="form-control"></td>
+                        <td><input id="name" class="form-control"></td>
+                      </tr>
+                      <tr>
+                          <td>6</td>
+                          <td><input id="name" class="form-control"></td>
+                          <td><input id="name" class="form-control"></td>
+                          <td><input id="name" class="form-control"></td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td><input id="name" class="form-control"></td>
+                            <td><input id="name" class="form-control"></td>
+                            <td><input id="name" class="form-control"></td>
+                          </tr>
+                          <tr>
+                              <td>8</td>
+                              <td><input id="name" class="form-control"></td>
+                              <td><input id="name" class="form-control"></td>
+                              <td><input id="name" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>9</td>
+                                <td><input id="name" class="form-control"></td>
+                                <td><input id="name" class="form-control"></td>
+                                <td><input id="name" class="form-control"></td>
+                              </tr>
+                              <tr>
+                                  <td>10</td>
+                                  <td><input id="name" class="form-control"></td>
+                                  <td><input id="name" class="form-control"></td>
+                                  <td><input id="name" class="form-control"></td>
+                                </tr>
+                </tbody>
+              </table>
+            </div>
+         
+          </div>
+     
+                      
+                      </form>
+                   
+                     
+            <div class="clearfix"></div>
+   
+                            
+                        </div>
+                        
+                    </div>
+                    <button type="submit" >Save</button>
+                </div>
+            </div>
+            
+            
+            
+            </div>
+      </body>
+
+      <script>
+      $(document).ready(function () {
+    var counter = 0;
+
+
+    $("#addrow").on("click", function () {
+        var newRow = $("<tr>");
+        var cols = "";
+
+        cols += '<td><input type="text" class="form-control" name="name' + counter + '"/></td>';
+       
+
+        cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
+        newRow.append(cols);
+        $("table.order-list").append(newRow);
+        counter++;
+    });
+
+ 
+
+    $("table.order-list").on("click", ".ibtnDel", function (event) {
+        $(this).closest("tr").remove();       
+        counter -= 1
+    });
+
+
+});
+
+
+
+function calculateRow(row) {
+    var price = +row.find('input[name^="price"]').val();
+
+}
+
+function calculateGrandTotal() {
+    var grandTotal = 0;
+    $("table.order-list").find('input[name^="price"]').each(function () {
+        grandTotal += +$(this).val();
+    });
+    $("#grandtotal").text(grandTotal.toFixed(2));
+}
+      </script>
+      
+      <footer>
+            <% include ../partials/footer.ejs %>
+        </footer>
