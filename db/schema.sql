@@ -34,6 +34,7 @@ CREATE TABLE todos (
     project_id INT NOT NULL,
     belongs_to INT NULL,
     finished BOOLEAN,
+    task_priority INT,
     FOREIGN KEY (project_id) REFERENCES projects(id),
     FOREIGN KEY (belongs_to) REFERENCES users(id),
     PRIMARY KEY (id)

@@ -42,7 +42,7 @@ module.exports = function(app){
                     if(result){
                         req.session.user_id = results[0].id;
                         req.session.email = results[0].email;
-
+                        req.session.username = results[0].name;
                         //send to user  homepage
                         res.send(`/${req.session.user_id}/home`);
                     }
@@ -90,7 +90,7 @@ module.exports = function(app){
     //logout and alert user
     app.get("/logout", function(req, res){
         req.session.destroy(function(err){
-            res.render('logout');
+            res.render('pages/logout');
         });
     });
 
@@ -103,53 +103,82 @@ module.exports = function(app){
         var user_info = {
             user_id : req.session.user_id,
             email: req.session.email
-        }
+        };
         //console.log(user_info);
 
         if(user_info.user_id === undefined || 
             user_info.user_id != req.params.userid) res.redirect("/login");
         else{
-
+            var username= req.session.username;
+            var homelink = `/${user_info.user_id}/home`;
+            var userid = user_info.user_id;
             connection.query(`SELECT p.name, p.project_description, u.name as creator FROM projects p RIGHT JOIN users_projects i ON i.project_id = p.id RIGHT JOIN users u ON u.id = p.creator_id WHERE i.user_id = ${user_info.user_id}`, 
             (error, results, fields)=>{
                 if (error) return console.log(error);
 
                 //console.log(results[0].name);
                 var projects = results;
-                res.render("pages/home", {projects});
+                res.render("pages/home", {username, homelink, userid, projects});
             });
         }
     });
 
     //shows a form of require info for creating new projects
     //ie, project name, add groupmates to project
-    app.get("/createproject", function(req, res){
-        
-        res.render("pages/create");
+    app.get("/:userid/createproject", function(req, res){
+        var user_info = {
+            user_id : req.session.user_id,
+            email: req.session.email
+        };
+
+        if(user_info.user_id === undefined || 
+            user_info.user_id != req.params.userid) res.redirect("/login");
+        else{
+            //console.log("createproject", user_info);
+            var username= req.session.username;
+            var homelink = `/${user_info.user_id}/home`;
+            res.render("pages/create",{
+                username, 
+                homelink
+            });
+        }
     });
 
     //get info after user submits new projects info
-    app.post("/createproject", function(req, res){
+    app.post("/:userid/createproject", function(req, res){
+        //var username= "";
         var user_info = {
             user_id : req.session.user_id,
             email: req.session.email
         }
 
-        if(user_info.user_id != undefined){
-            projects.insert(req.body.project_name, user_info.user_id, (err)=>{
-                if(err){
-                    res.send(403, {
-                        error: err
-                    });
-                }
-                else{
-                    res.redirect(`/${user_info.user_id}/home`);
-                }
+        if(user_info.user_id === undefined || 
+            user_info.user_id != req.params.userid) res.redirect("/login");
+        else{
+            //console.log("createproject", user_info);
+            var username= req.session.username;
+            var homelink = `/${user_info.user_id}/home`;
+            res.render("pages/create",{
+                username, 
+                homelink
             });
         }
-        else{
-            res.redirect("/login");
-        }
+
+        // if(user_info.user_id != undefined){
+        //     projects.insert(req.body.project_name, user_info.user_id, (err)=>{
+        //         if(err){
+        //             res.send(403, {
+        //                 error: err
+        //             });
+        //         }
+        //         else{
+        //             res.redirect(`/${user_info.user_id}/home`);
+        //         }
+        //     });
+        // }
+        // else{
+        //     res.redirect("/login");
+        // }
     });    
     
     //delete all info associate to the project
