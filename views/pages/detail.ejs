@@ -142,6 +142,32 @@ rgb(242, 239, 244);
         body{
           height: 400px;
         }
+
+        .form-control{border:0; box-shadow:none}
+.form-control:focus{box-shadow:none;}
+
+label{color:#999;  padding-top: 5px; display:block; left:0; width:100%}
+
+.panel{border-width:2px; border-radius:7px}
+
+.table-bordered > thead > tr > th,
+.table-bordered > tbody > tr > th,
+.table-bordered > tfoot > tr > th,
+.table-bordered > thead > tr > td,
+.table-bordered > tbody > tr > td,
+.table-bordered > tfoot > tr > td{border:2px solid #eee; vertical-align: middle;}
+.table-bordered{border-radius:7px}
+
+.form-control::-moz-placeholder {
+color: #999;
+opacity: 1
+}
+.form-control:-ms-input-placeholder {
+color: #999
+}
+.form-control::-webkit-input-placeholder {
+color: #999
+}
 				
 				</style>
 				
@@ -149,64 +175,116 @@ rgb(242, 239, 244);
 </head>
 
 <body>
+
 		<div class="container">
-          
-                <h1>Project Details</h1>  
-                
-                <div class="row">
-                    
-                    
-                        <div class="col-md-12">
-              
-                <dl>
-                  <dt>Name</dt>
-                  <dd>Test Project</dd>
-                  <dt>Description</dt>
-                  <dd>This project id for page design</dd>
-                </dl>     
-              </div>
-</div>
-</div>
-            
-<div class="row">
-                    
-                    
-        
+				<div class="row">
+					<h2>Project Details</h2>
+				</div>
+					<form action="#">
+							<div class="row">
+											<div class="col-md-3">
+													<div class="form-group form-group-sm">
+															<label for="name" class="control-label">Name</label>
+															<output lass="form-control" id="name"><h4>Test</h4></output>
+													</div>
+											</div>
+										
+											<div class="col-md-3">
+													<div class="form-group">
+															<label for="priority" class="control-label">Priority</label>
+															<output lass="form-control" id="name">Test</output>
+													</div>
+											</div>
+							</div>
 
-              <h2>Striped Rows</h2>
-              <p>The .table-striped class adds zebra-stripes to a table:</p>            
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
-                    <th>Email</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>John</td>
-                    <td>Doe</td>
-                    <td>john@example.com</td>
-                  </tr>
-                  <tr>
-                    <td>Mary</td>
-                    <td>Moe</td>
-                    <td>mary@example.com</td>
-                  </tr>
-                  <tr>
-                    <td>July</td>
-                    <td>Dooley</td>
-                    <td>july@example.com</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+							<div class="row">
+									<div class="col-6" id="tasks">
+											<h3>Tasks</h3>
+								
+									</div>
+									</div>
 
+							<div>
+									<textarea id="newTask" rows="4" cols="50" placeholder="Task name here"></textarea> <br>
+									<button id="insertTask">Submit</button>
+									<p>Enter a Task you want to assign</p>
+							</div>               
+														
+						
+							<div class="row">
+									<br>
+												
+												<div class="col-sm-6">
+														<div class="panel panel-primary">
+															<div class="panel-heading">Tasks assigned to users</div>
+															<table class="table table-bordered">
+																<thead>
+																	<tr>
+																	
+																		<th>Unassigned</th>
+																		<th>Amaan</th>
+																		<th>Chareen</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr>
+																		
+																		<td><output id="name" class="form-control"> Task1</td>
+																		<td><output id="name" class="form-control">Task2</td>
+																		<td><output id="name" class="form-control">Task3</td>
+																	</tr>
+																	<tr>
+																		
+																			<td><output id="name" class="form-control">Task Unassigned 2</td>
+																			
+																		</tr>
+																		<tr>
+																		
+																				<td><output id="name" class="form-control">Task Unassigned 3</td>
+																					<td><output id="name" class="form-control">Task Amaan 2</td>
+																						<td><output id="name" class="form-control">Task Chareen 2</td>
+																				
+																			</tr>
+															
+											
+																</tbody>
+															</table>
+														</div>
+												 
+													</div>
+			
+												</div>
+											
+
+	
+		
+						
+		
+		
+		   
+            <div class="clearfix"></div>
+					</div>
+
+				</form>
+      
+			</body>
+			
+			<script type='text/javascript'>
+
+			  $("#insertTask").on("click", function(){
+            if($("#newTask").val().trim() === ""){
+                alert("Cannot add an empty Task.");
+                return;
+            }
+            var burgerName = $("#newTask").val().trim();
+
+			
+			</script>
+			
     
-    </div>
-
-		<footer>
-				<% include ../partials/footer.ejs %>
-			</footer>
-	  </body>
+      
+      <footer>
+            <% include ../partials/footer.ejs %>
+				</footer>
+				
+				</html>
