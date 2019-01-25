@@ -183,9 +183,38 @@ module.exports = function(app){
         }
         if(user_info.user_id === undefined) res.redirect("/login");
         else{
-            console.log(req.body.projectID);
-            //res.redirect(`/${user_info.user_id}/home`);
+            //console.log(req.body.projectID);
             projects.delete(req.body.projectID, ()=>{
+                res.send(true);
+            });
+        }
+    });
+
+    // rename project name
+    app.post("/renameproject", function(req, res){
+        var user_info = {
+            user_id : req.session.user_id,
+            email: req.session.email
+        }
+        if(user_info.user_id === undefined) res.redirect("/login");
+        else{
+            //console.log(req.body.projectID);
+            projects.rename(req.body.projectID, req.body.newName,()=>{
+                res.send(true);
+            });
+        }
+    });
+
+    //edit project description
+    app.post("/editprojectdescription", function(req, res){
+        var user_info = {
+            user_id : req.session.user_id,
+            email: req.session.email
+        }
+        if(user_info.user_id === undefined) res.redirect("/login");
+        else{
+            //console.log(req.body.projectID);
+            projects.editDescription(req.body.projectID, req.body.newDescription,()=>{
                 res.send(true);
             });
         }

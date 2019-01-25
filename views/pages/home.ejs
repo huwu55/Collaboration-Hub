@@ -185,13 +185,21 @@ rgb(242, 239, 244);
                   <% for(var i=0; i < projects.length; i++){ %>
                     <tr class="project" id=<%= "project" + projects[i].id %>>
                       <!-- <td><%= projects[i].id %></td> -->
-                      <td><%= projects[i].name %></td>
-                      <td><%= projects[i].project_description %></td>
+                      <td class="projectName"><%= projects[i].name %></td>
+                      <td class="projectDescription"><%= projects[i].project_description %></td>
                       <td><%= projects[i].creator %></td>
                       <% if(projects[i].creator === projects.currentUser){ %>
-                        <!-- <td><p data-placement="top" data-toggle="tooltip" title="Edit title, description and more"><button class="editProject btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td> -->
                         <td>
-                            <button class="editProject btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit"><span class="glyphicon glyphicon-pencil"></span></button>
+
+                            <div class="dropdown">
+                                <button class="btn btn-primary btn-xs dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                  <button id="renameprojectname" class="dropdown-item" data-target="#renameProject" data-project-id=<%= projects[i].id %>>Rename project name</button>
+                                  <button id="editProjectDescription" class="dropdown-item" data-target="#editDescription" data-project-id=<%= projects[i].id %>>Edit project description</button>
+                                </div>
+                              </div>
                         </td>
                         <td><button type="button" class="deleteProject btn btn-danger btn-xs" data-title="Delete" data-target="#delete" data-project-id=<%= projects[i].id %>><span class="glyphicon glyphicon-trash"></span></button></td>
                         <% } %>
@@ -221,43 +229,13 @@ rgb(242, 239, 244);
                     </div>
                 </div>
             </div>
-            
-            
-            <!-- <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-                  <div class="modal-dialog">
-                <div class="modal-content">
-                      <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                    <h4 class="modal-title custom_align" id="Heading">Edit Your Detail</h4>
-                  </div>
-                      <div class="modal-body">
-                      <div class="form-group">
-                    <input class="form-control " type="text" placeholder="Mohsin">
-                    </div>
-                    <div class="form-group">
-                    
-                    <input class="form-control " type="text" placeholder="Irshad">
-                    </div>
-                    <div class="form-group">
-                    <textarea rows="2" class="form-control" placeholder="CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan"></textarea>
-                
-                    
-                    </div>
-                  </div>
-                      <div class="modal-footer ">
-                    <button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
-                  </div>
-                    </div>
 
-              </div>
-
-                </div> -->
-
+                  <!-- delete project modal -->
                 <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h4 class="modal-title" id="exampleModalLongTitle">Are you sure you want to delete this project?</h4>
+                        <h4 class="modal-title">Are you sure you want to delete this project?</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
@@ -275,6 +253,54 @@ rgb(242, 239, 244);
                     </div>
                   </div>
                 </div>
+
+                <!-- rename project modal -->
+                <div class="modal fade" id="renameProject" tabindex="-1" role="dialog" aria-labelledby="renameProject" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title">Rename Project</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                            <div style="display: flex;">
+                                <label>New project name:</label> &nbsp;
+                                <input id="newProjectName" style="flex: 1;" type="text" >
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button id="rename" type="button" class="btn btn-primary" data-dismiss="modal">Rename project</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- edit project description modal -->
+                  <div class="modal fade" id="editDescription" tabindex="-1" role="dialog" aria-labelledby="editDescription" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h4 class="modal-title">Edit Project Description</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                              <div style="display: flex;">
+                                  <label>Project description:</label> &nbsp;
+                                  <textarea id="newProjectDescription" style="flex: 1;" type="text" ></textarea>
+                              </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button id="editD" type="button" class="btn btn-primary" data-dismiss="modal">Edit Description</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
 		<footer>
             <% include ../partials/footer.ejs %>
@@ -295,6 +321,54 @@ rgb(242, 239, 244);
             parentTag.remove();
           });
         });
+    });
+
+    $("#projects").on("click", "tbody .project td .dropdown .dropdown-menu #renameprojectname", function(){
+        $($(this).data("target")).modal("show");
+        //console.log($(this).attr("data-project-id"));
+        var projectID = $(this).attr("data-project-id");
+
+        $("#rename").on("click",function(){
+          var newName = $("#newProjectName").val().trim();
+          //console.log(newName);
+          if (newName != ""){
+            $.ajax({
+              url: "/renameproject",
+              method: 'POST',
+              data: {
+                projectID: projectID,
+                newName : newName
+              }
+            }).then(()=>{
+              var pid = "project"+projectID;
+              $("tbody #"+pid+" .projectName").text(newName);
+            });
+          }
+         });
+    });
+
+    $("#projects").on("click", "tbody .project td .dropdown .dropdown-menu #editProjectDescription", function(){
+        $($(this).data("target")).modal("show");
+        //console.log($(this).attr("data-project-id"));
+        var projectID = $(this).attr("data-project-id");
+
+        $("#editD").on("click",function(){
+          var newDescription = $("#newProjectDescription").val().trim();
+          //console.log(newName);
+          if (newDescription != ""){
+            $.ajax({
+              url: "/editprojectdescription",
+              method: 'POST',
+              data: {
+                projectID: projectID,
+                newDescription : newDescription
+              }
+            }).then(()=>{
+              var pid = "project"+projectID;
+              $("tbody #"+pid+" .projectDescription").text(newDescription);
+            });
+          }
+         });
     });
   </script>
 </html>

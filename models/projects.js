@@ -29,6 +29,12 @@ var projects = {
         });
     },
 
+    editDescription : function(project_id, project_description, cb){
+        orm.update("projects", "project_description", "id", [project_description, project_id], ()=>{
+            cb();
+        });
+    },
+
     //delete project and related info from user
     delete : function(project_id, cb){
         orm.delete("todos", "project_id", project_id, ()=>{
