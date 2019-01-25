@@ -3,9 +3,9 @@ var orm = require("../config/orm.js");
 var users = {
     //insert new signup user
     insert : function(username, email, password_hash, cb){
-        orm.insert("users", "(name, email, password_hash)", [username, email, password_hash], (error)=>{
+        orm.insert("users", "(name, email, password_hash)", [username, email, password_hash], (error, result)=>{
             //if (error) return console.log(error);
-            cb(error);
+            cb(error, result);
         });
     },
 

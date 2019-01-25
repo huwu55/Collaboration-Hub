@@ -3,8 +3,8 @@ var orm = require("../config/orm.js");
 var todos = {
     //create a new task of the project
     insert : function(task, project_id, belongs_to, finished, cb){
-        orm.insert("todos", "(task, project_id, belongs_to, finished)", [task, project_id, belongs_to, finished], ()=>{
-            cb();
+        orm.insert("todos", "(task, project_id, belongs_to, finished)", [task, project_id, belongs_to, finished], (err, result)=>{
+            cb(err, result);
         });
     },
 

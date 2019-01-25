@@ -118,6 +118,9 @@ module.exports = function(app){
 
                 //console.log(results[0].name);
                 var projects = results;
+                //console.log(projects)
+                projects.currentUser = username;
+
                 res.render("pages/home", {username, homelink, userid, projects});
             });
         }
@@ -137,16 +140,18 @@ module.exports = function(app){
             //console.log("createproject", user_info);
             var username= req.session.username;
             var homelink = `/${user_info.user_id}/home`;
+            var userid = user_info.user_id;
             res.render("pages/create",{
                 username, 
-                homelink
+                homelink,
+                userid
             });
         }
     });
 
     //get info after user submits new projects info
     app.post("/:userid/createproject", function(req, res){
-        //var username= "";
+
         var user_info = {
             user_id : req.session.user_id,
             email: req.session.email
@@ -155,30 +160,18 @@ module.exports = function(app){
         if(user_info.user_id === undefined || 
             user_info.user_id != req.params.userid) res.redirect("/login");
         else{
-            //console.log("createproject", user_info);
-            var username= req.session.username;
-            var homelink = `/${user_info.user_id}/home`;
-            res.render("pages/create",{
-                username, 
-                homelink
+            var projectName = req.body.projectName.trim();
+            var projectDescription = req.body.projectDescription.trim();
+            //console.log(projectName, projectDescription);
+            if (projectDescription === "")  projectDescription = null;
+
+            projects.insert(projectName, projectDescription, user_info.user_id, (err, result)=>{
+                //console.log(result[0]['LAST_INSERT_ID()']);
+                users_projects.insert(user_info.user_id, result[0]['LAST_INSERT_ID()'], (err, result)=>{
+                    res.redirect(`/${user_info.user_id}/home`);
+                });
             });
         }
-
-        // if(user_info.user_id != undefined){
-        //     projects.insert(req.body.project_name, user_info.user_id, (err)=>{
-        //         if(err){
-        //             res.send(403, {
-        //                 error: err
-        //             });
-        //         }
-        //         else{
-        //             res.redirect(`/${user_info.user_id}/home`);
-        //         }
-        //     });
-        // }
-        // else{
-        //     res.redirect("/login");
-        // }
     });    
     
     //delete all info associate to the project

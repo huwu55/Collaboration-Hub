@@ -25,10 +25,15 @@ var ORM = {
             if (i+1 < values.length) str+=",";
         }
         str+=")";
-        console.log(str);
+        //console.log(str);
         connection.query(`INSERT INTO ${tableInput} ${fieldnames} VALUES ${str}`, values, (error, results, fields)=>{
-            if (error) return cb(error);
-            cb(false);
+            connection.query("SELECT LAST_INSERT_ID()", (error, results, fields)=>{
+                if (error) {
+                    console.log(error);
+                    return cb(error, null)
+                };
+                cb(false, results);
+            });
         });
     },
 
