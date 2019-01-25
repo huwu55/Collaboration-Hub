@@ -5,14 +5,18 @@
 <head>
 		<% include ../partials/loged-in-header.ejs %>
 		
-		<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-		<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
+    <!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script> -->
+    <!-- <script src="https://code.jquery.com/jquery.js"></script> -->
+
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+    
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     
-
-
 		<style>
 				:root {
 					--input-padding-x: 1.5rem;
@@ -179,13 +183,17 @@ rgb(242, 239, 244);
                 <tbody>
 
                   <% for(var i=0; i < projects.length; i++){ %>
-                    <tr id=<%= "project" + projects[i].id %>>
+                    <tr class="project" id=<%= "project" + projects[i].id %>>
+                      <!-- <td><%= projects[i].id %></td> -->
                       <td><%= projects[i].name %></td>
                       <td><%= projects[i].project_description %></td>
                       <td><%= projects[i].creator %></td>
                       <% if(projects[i].creator === projects.currentUser){ %>
-                        <td><p data-placement="top" data-toggle="tooltip" title="Edit title, description and more"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-                        <td><p data-placement="top" data-toggle="tooltip" title="Delete project"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
+                        <!-- <td><p data-placement="top" data-toggle="tooltip" title="Edit title, description and more"><button class="editProject btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td> -->
+                        <td>
+                            <button class="editProject btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit"><span class="glyphicon glyphicon-pencil"></span></button>
+                        </td>
+                        <td><button type="button" class="deleteProject btn btn-danger btn-xs" data-title="Delete" data-target="#delete" data-project-id=<%= projects[i].id %>><span class="glyphicon glyphicon-trash"></span></button></td>
                         <% } %>
                     </tr>
                   <% } %>
@@ -197,7 +205,7 @@ rgb(242, 239, 244);
                     
             </table>
             
-            <div class="clearfix"></div>
+            <!-- <div class="clearfix"></div> -->
             <!-- <ul class="pagination pull-right">
               <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
               <li class="active"><a href="#">1</a></li>
@@ -215,7 +223,7 @@ rgb(242, 239, 244);
             </div>
             
             
-            <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+            <!-- <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
                   <div class="modal-dialog">
                 <div class="modal-content">
                       <div class="modal-header">
@@ -240,33 +248,32 @@ rgb(242, 239, 244);
                     <button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
                   </div>
                     </div>
-                <!-- /.modal-content --> 
+
               </div>
-                  <!-- /.modal-dialog --> 
-                </div>
-                
-                
-                
-                <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-                  <div class="modal-dialog">
-                <div class="modal-content">
+
+                </div> -->
+
+                <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
                       <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                    <h4 class="modal-title custom_align" id="Heading">Delete this entry</h4>
-                  </div>
+                        <h4 class="modal-title" id="exampleModalLongTitle">Are you sure you want to delete this project?</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
                       <div class="modal-body">
-                   
-                   <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this Record?</div>
-                   
-                  </div>
-                    <div class="modal-footer ">
-                    <button type="button" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
-                  </div>
+                          <div class="alert alert-danger">
+                              <span class="glyphicon glyphicon-warning-sign"></span> 
+                              You will delete all records related to this project including you and your teammates' todo lists. After deletion, you and your teammates will no longer have access to modify this deleted project. 
+                             </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="deleteThis" type="button" class="btn btn-danger" data-dismiss="modal">Delete project</button>
+                      </div>
                     </div>
-                <!-- /.modal-content --> 
-              </div>
-                  <!-- /.modal-dialog --> 
+                  </div>
                 </div>
 
 		<footer>
@@ -274,8 +281,20 @@ rgb(242, 239, 244);
         </footer>
   </body>
   <script type="text/javascript">
-    // $("#createproject").on("click", function(){
-      
-    // });
+    $("#projects").on("click", "tbody .project td .deleteProject", function(){
+        $($(this).data("target")).modal("show");
+        //console.log($(this).attr("data-project-id"));
+        var projectID = $(this).attr("data-project-id");
+        var parentTag = $(this).parent().parent();
+        $("#deleteThis").on("click",function(){
+          $.ajax({
+            url: "/deleteproject",
+            method: 'POST',
+            data: {projectID: projectID}
+          }).then(()=>{
+            parentTag.remove();
+          });
+        });
+    });
   </script>
 </html>

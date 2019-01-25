@@ -112,7 +112,7 @@ module.exports = function(app){
             var username= req.session.username;
             var homelink = `/${user_info.user_id}/home`;
             var userid = user_info.user_id;
-            connection.query(`SELECT p.name, p.project_description, u.name as creator FROM projects p RIGHT JOIN users_projects i ON i.project_id = p.id RIGHT JOIN users u ON u.id = p.creator_id WHERE i.user_id = ${user_info.user_id}`, 
+            connection.query(`SELECT p.id, p.name, p.project_description, u.name as creator FROM projects p RIGHT JOIN users_projects i ON i.project_id = p.id RIGHT JOIN users u ON u.id = p.creator_id WHERE i.user_id = ${user_info.user_id}`, 
             (error, results, fields)=>{
                 if (error) return console.log(error);
 
@@ -177,7 +177,18 @@ module.exports = function(app){
     //delete all info associate to the project
     //alert them before complete this deletion
     app.post("/deleteproject", function(req, res){
-
+        var user_info = {
+            user_id : req.session.user_id,
+            email: req.session.email
+        }
+        if(user_info.user_id === undefined) res.redirect("/login");
+        else{
+            console.log(req.body.projectID);
+            //res.redirect(`/${user_info.user_id}/home`);
+            projects.delete(req.body.projectID, ()=>{
+                res.send(true);
+            });
+        }
     });
 
     //show project todo lists and groupmates
