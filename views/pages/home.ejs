@@ -172,7 +172,7 @@ rgb(242, 239, 244);
                             
                           <table id="projects" class="table table-bordred table-striped">
                                
-                               <thead>
+                               <thead style="font-size:15px;">
                                  <th>Project Name</th>
                                  <th>Description</th>
                                  <th>Created by</th>
@@ -185,21 +185,21 @@ rgb(242, 239, 244);
                   <% for(var i=0; i < projects.length; i++){ %>
                     <tr class="project" id=<%= "project" + projects[i].id %>>
                       <!-- <td><%= projects[i].id %></td> -->
-                      <td class="projectName"><%= projects[i].name %></td>
+                      <td class="projectName"><a style="color:black;" href=<%= "/" + projects[i].id + "/project" %>><b><%= projects[i].name %></b></a></td>
                       <td class="projectDescription"><%= projects[i].project_description %></td>
                       <td><%= projects[i].creator %></td>
                       <% if(projects[i].creator === projects.currentUser){ %>
                         <td>
 
-                            <div class="dropdown">
-                                <button class="btn btn-primary btn-xs dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                  <button id="renameprojectname" class="dropdown-item" data-target="#renameProject" data-project-id=<%= projects[i].id %>>Rename project name</button>
-                                  <button id="editProjectDescription" class="dropdown-item" data-target="#editDescription" data-project-id=<%= projects[i].id %>>Edit project description</button>
-                                </div>
+                          <div class="dropdown">
+                              <button class="btn btn-primary btn-xs dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  <span class="glyphicon glyphicon-pencil"></span>
+                              </button>
+                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <button id="renameprojectname" class="dropdown-item" data-target="#renameProject" data-project-id=<%= projects[i].id %>>Rename project name</button>
+                                <button id="editProjectDescription" class="dropdown-item" data-target="#editDescription" data-project-id=<%= projects[i].id %>>Edit project description</button>
                               </div>
+                            </div>
                         </td>
                         <td><button type="button" class="deleteProject btn btn-danger btn-xs" data-title="Delete" data-target="#delete" data-project-id=<%= projects[i].id %>><span class="glyphicon glyphicon-trash"></span></button></td>
                         <% } %>

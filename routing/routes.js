@@ -223,8 +223,22 @@ module.exports = function(app){
     //show project todo lists and groupmates
     //invite/delete groupmate option if the user is the creator
     //todo list: add/delete/assign to groupmate buttons
-    app.get("/project/:projectid", function(req, res){
-
+    app.get("/:projectid/project", function(req, res){
+        var user_info = {
+            user_id : req.session.user_id,
+            email: req.session.email
+        }
+        if(user_info.user_id === undefined) res.redirect("/login");
+        else{
+            var username = req.session.username;
+            var homelink = `/${user_info.user_id}/home`;
+            var userid = user_info.user_id;
+            res.render("pages/detail", {
+                username,
+                homelink,
+                userid
+            });
+        }
     });
 
     //invite existing user to the project
