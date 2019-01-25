@@ -27,6 +27,7 @@ var ORM = {
         str+=")";
         //console.log(str);
         connection.query(`INSERT INTO ${tableInput} ${fieldnames} VALUES ${str}`, values, (error, results, fields)=>{
+            console.log(error);
             connection.query("SELECT LAST_INSERT_ID()", (error, results, fields)=>{
                 if (error) {
                     console.log(error);

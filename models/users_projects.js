@@ -3,8 +3,8 @@ var orm = require("../config/orm.js");
 var users_projects = {
     //create connection between user and project
     insert : function(user_id, project_id, cb){
-        orm.insert("users_projects", "(user_id, project_id)", [user_id, project_id], ()=>{
-            cb();
+        orm.insert("users_projects", "(user_id, project_id)", [user_id, project_id], (err, result)=>{
+            cb(err, result);
         });
     },
 

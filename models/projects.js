@@ -15,6 +15,12 @@ var projects = {
         });
     },
 
+    getProjectName : function(id, cb){
+        orm.selectCertain("projects", "id", id, (results)=>{
+            cb(results);
+        });
+    },
+
     //return all projects that the user created
     selectProjects : function(creator_id, cb){
         orm.selectCertain("projects", "creator_id", creator_id, (results)=>{

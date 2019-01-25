@@ -232,18 +232,70 @@ module.exports = function(app){
         else{
             var username = req.session.username;
             var homelink = `/${user_info.user_id}/home`;
-            var userid = user_info.user_id;
-            res.render("pages/detail", {
-                username,
-                homelink,
-                userid
+            var projectid = req.params.projectid;
+            projects.getProjectName(req.params.projectid, (results)=>{
+                var projectName = results[0].name;
+                res.render("pages/detail", {
+                    username,
+                    homelink,
+                    projectName,
+                    projectid
+                });
             });
+            
         }
     });
 
     //invite existing user to the project
-    app.post("/project/:projectid/invite", function(req, res){
+    app.post("/:projectid/invite", function(req, res){
+        var user_info = {
+            user_id : req.session.user_id,
+            email: req.session.email
+        }
+        if(user_info.user_id === undefined) res.redirect("/login");
+        else{
+            var userEmail = req.body.newGroupmateEmail;
+            var projectid = req.params.projectid;
+            //console.log("projectid", projectid);
 
+            users.selectUser(userEmail, (results)=>{
+                if(results.length === 0){
+                    res.send(403, {
+                        error: `Cannot find user ${userEmail}, please try again.`
+                    });
+                }
+                else{
+                    var userid = results[0].id;
+                    var username = results[0].name;
+                    if (user_info.user_id === userid){
+                        res.send(403, {
+                            error: "You are already in this group."
+                        });
+                    }
+
+                    connection.query(`SELECT user_id, project_id FROM users_projects WHERE user_id = ${userid} AND project_id = ${projectid}`, 
+                    (error, results, fields)=>{
+                        console.log(results);
+                        if(results.length > 0){
+                            res.send(403, {
+                                error: "This user is already added in this group."
+                            });
+                        }
+                        else{
+                            users_projects.insert(userid, projectid, (err, result)=>{
+                                //console.log(err);
+                                //console.log(result);
+                                res.send({
+                                    userid,
+                                    username
+                                });
+                            });
+                        }
+                        
+                    });
+                }
+            });
+        }
     });
 
     //delete groupmate from the project
