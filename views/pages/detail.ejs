@@ -15,26 +15,25 @@
 
 		<style>
 			:root {
-				--input-padding-x: 1.5rem;
-				--input-padding-y: .75rem;
-				}
-				
-					body {
-					background: #9CECFB;
-						
-					background: -webkit-linear-gradient(to right, #0052D4, #65C7F7, #9CECFB);
+			--input-padding-x: 1.5rem;
+			--input-padding-y: .75rem;
+			}
+			
+				body {
+				background: #9CECFB;
 					
-					background: linear-gradient(to right, #0052D4, #65C7F7, #9CECFB);
+				background: -webkit-linear-gradient(to right, #0052D4, #65C7F7, #9CECFB);
 				
-				}
+				background: linear-gradient(to right, #0052D4, #65C7F7, #9CECFB);
+			
+			}
 
-				.topbanner { 
-					background:
-				rgb(242, 239, 244);
+			.topbanner { 
+				background:
+			rgb(242, 239, 244);
 
 
-				}
-
+			}
 		
 		</style>
 				
@@ -47,21 +46,20 @@
 				<div class="row">
 					<div class="col-md-12">
 							<b id="projectName" style="font-size:20px;"><%= projectName %></b> <br><br>
-							<!-- Invite groupmate: <input id="invite" type="email" placeholder="Enter member email here"> 
-								<button id="addGroupmate" class="btn btn-light">Add</button>
-							<div id="addGroupmateAlert" style="color: red"></div>
-							Add task: <textarea id="newTask" rows="4" cols="50" placeholder="Enter new task here. Limited to 500 characters."></textarea> <button id="addNewTask" class="btn btn-light">Add</button> <br> -->
 
 							<button id="addGroupmate" type="button" class="btn btn-light" data-target="#inviteGroupmateModal" title="Invite a groupmate" data-project-id=<%= projectid %>>
 								<span class="glyphicon glyphicon-star"></span>
 								Invite a groupmate
 							</button>
 
-							<button id="removeGroupmate" type="data-project-id=<%= projectid %>button" class="btn btn-light" title="Remove a groupmate" data-project-id=<%= projectid %>>
-									<span class="glyphicon glyphicon-star-empty"></span>
-									Remove a groupmate
-							</button>
-
+							<span id="projectCreator">
+								<% if(projectCreator === userid){ %>
+									<button id="removeGroupmate" type="button" class="btn btn-light" data-target="#removeGroupmateModal" title="Remove groupmate" data-project-id=<%= projectid %>>
+											<span class="glyphicon glyphicon-star-empty"></span>
+											Remove groupmate
+									</button>
+								<% } %>
+							</span>
 							<button id="addNewTask" type="button" class="btn btn-light" data-target="#addNewTaskModal" title="Add new task" data-project-id=<%= projectid %>>
 								<span class="glyphicon glyphicon-plus"></span>
 								Add new task
@@ -91,6 +89,37 @@
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 								<button id="invite" type="button" class="btn btn-primary">Invite</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- remove groupmate modal -->
+				<div class="modal fade" id="removeGroupmateModal" tabindex="-1" role="dialog" aria-labelledby="removeGroupmateModal" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">Remove groupmate</h4>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+									<div class="input-group container" style="font-size:15px;">
+											<div class="row" id="groupmates">
+													<% for(var i = 0; i < groupmates.length; i++){ %>
+														<div class="col-4 text-nowrap">
+															<button type="button" class="btn btn-outline-danger removeThisGroupmate" data-groupmateid=<%= groupmates[i].user_id %>>
+																<span class="glyphicon glyphicon-remove"></span>
+															</button>
+															<span><%= groupmates[i].name %></span>
+														</div>
+													<% } %>
+											</div>
+									</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 							</div>
 						</div>
 					</div>
@@ -142,8 +171,22 @@
 					data: {newGroupmateEmail: newGroupmateEmail},
 					success : function(result){
 						$("#groupmateEmail").val("");
-						console.log(result);
+						//console.log(result);
 						inviteModal.modal("hide");
+						var newGroupmate = $("<div>");
+						newGroupmate.attr("class", "col-4 text-nowrap");
+						var delButton = $("<button>");
+						delButton.attr("type", "button")
+							.attr("class", "btn btn-outline-danger removeThisGroupmate")
+							.attr("data-groupmateid", result.userid)
+							.html("<span class='glyphicon glyphicon-remove'></span>");
+						newGroupmate.append(delButton);
+						var gname = $("<span>");
+						gname.text(result.username);
+						newGroupmate.append(gname);
+
+						$("#groupmates").append(newGroupmate);
+
 					},
 					error : function(err){
 						//console.log(err.responseJSON.error);
@@ -152,6 +195,26 @@
 					}
 				});
 			}
+		});
+	});
+
+	$("#removeGroupmate").on("click", function(){
+		$($(this).data("target")).modal("show");
+
+		var projectID = $(this).attr("data-project-id");
+		//console.log(projectID);
+
+		$("#groupmates").on("click", ".col-4 .removeThisGroupmate", function(){
+			var groupmateID = $(this).attr("data-groupmateid");
+			//console.log(groupmateID);
+			$.ajax({
+				url: `/${projectID}/${groupmateID}/deletegroupmate`,
+				method : "POST",
+				success : function(result){
+					//console.log($('*[data-groupmateid=' + groupmateID + ']'));
+					$('*[data-groupmateid=' + groupmateID + ']').parent().remove();
+				}
+			});
 		});
 	});
 

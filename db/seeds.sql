@@ -31,3 +31,8 @@ FROM projects p
 RIGHT JOIN users_projects i ON i.project_id = p.id 
 RIGHT JOIN users u ON u.id = p.creator_id
 WHERE i.user_id = 1
+
+SELECT i.user_id, u.name
+FROM users_projects i
+RIGHT JOIN users u ON i.user_id = u.id
+WHERE i.project_id = 1

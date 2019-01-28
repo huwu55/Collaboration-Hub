@@ -235,11 +235,22 @@ module.exports = function(app){
             var projectid = req.params.projectid;
             projects.getProjectName(req.params.projectid, (results)=>{
                 var projectName = results[0].name;
-                res.render("pages/detail", {
-                    username,
-                    homelink,
-                    projectName,
-                    projectid
+                var projectCreator = results[0].creator_id;
+                var userid = user_info.user_id;
+                //users_projects.selectUsers(projectid, (results))
+                connection.query(`SELECT i.user_id, u.name FROM users_projects i RIGHT JOIN users u ON i.user_id = u.id WHERE i.project_id = ${projectid}`,
+                (error, results, fields)=>{
+                    var groupmates = results;
+                    //console.log(results[0]);
+                    res.render("pages/detail", {
+                        username,
+                        homelink,
+                        projectName,
+                        projectid,
+                        projectCreator,
+                        userid,
+                        groupmates
+                    });
                 });
             });
             
@@ -299,8 +310,17 @@ module.exports = function(app){
     });
 
     //delete groupmate from the project
-    app.post("/project/:projectid/deletegroupmate", function(req, res){
-
+    app.post("/:projectid/:groupmateid/deletegroupmate", function(req, res){
+        var user_info = {
+            user_id : req.session.user_id,
+            email: req.session.email
+        }
+        if(user_info.user_id === undefined) res.redirect("/login");
+        else{
+            users_projects.removeUser(req.params.projectid, req.params.groupmateid, ()=>{
+                res.send(true);
+            });
+        }
     });
 
     //add a task

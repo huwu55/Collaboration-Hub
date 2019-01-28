@@ -202,6 +202,13 @@ rgb(242, 239, 244);
                             </div>
                         </td>
                         <td><button type="button" class="deleteProject btn btn-danger btn-xs" data-title="Delete" data-target="#delete" data-project-id=<%= projects[i].id %>><span class="glyphicon glyphicon-trash"></span></button></td>
+                        <% } else { %>
+                          <td>
+                            &nbsp;
+                          </td>
+                          <td>
+                              &nbsp;
+                          </td>
                         <% } %>
                     </tr>
                   <% } %>
