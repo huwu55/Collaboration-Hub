@@ -71,7 +71,7 @@ module.exports = function(app){
 
                 //res.send(p_hash);
 
-                users.insert(req.body.username, req.body.email, p_hash, (err)=>{
+                users.insert(req.body.username, req.body.email, p_hash, (err, result)=>{
                     //console.log(err);
                     if(err){
                         res.send(403, {
@@ -321,6 +321,7 @@ module.exports = function(app){
                 res.send(true);
             });
         }
+
     });
 
     //add a task
